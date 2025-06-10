@@ -5,3 +5,4 @@ export interface Gasto {
   categoria: 'comida' | 'transporte' | 'entretenimiento' | 'estudios' | 'otros';
   fecha: string;
 }
+
