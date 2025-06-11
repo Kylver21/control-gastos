@@ -21,6 +21,13 @@ function AgregarGasto() {
     return;
     }
     if (formData.descripcion && formData.cantidad) {
+      // Validación de cantidad
+    const cantidadNum = parseFloat(formData.cantidad);
+    if (isNaN(cantidadNum) || cantidadNum <= 0) {
+      alert('La cantidad debe ser un número mayor a 0.');
+      return;
+    }
+      // Guardar el gasto
       const nuevoGasto: Gasto = {
         id: Date.now().toString(),
         descripcion: formData.descripcion,
@@ -29,19 +36,13 @@ function AgregarGasto() {
         fecha: formData.fecha
       }
       
-      // Validación de cantidad
-    const cantidadNum = parseFloat(formData.cantidad);
-    if (isNaN(cantidadNum) || cantidadNum <= 0) {
-      alert('La cantidad debe ser un número mayor a 0.');
-      return;
-    }
       const gastosGuardados = localStorage.getItem('gastos')
       const gastos = gastosGuardados ? JSON.parse(gastosGuardados) : []
       gastos.push(nuevoGasto)
       localStorage.setItem('gastos', JSON.stringify(gastos))
       
       alert('Gasto agregado exitosamente!')
-      navigate('/lista')
+      navigate('/lista') // <--- Aquí ocurre la navegación automática
     } 
   }
 

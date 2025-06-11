@@ -14,10 +14,21 @@ function GastoItem({ gasto, onEliminar }: GastoItemProps) {
       year: 'numeric'
     })
   }
+  // Colores de fondo por categoría
+  const categoriaColors: Record<string, string> = {
+    comida: '#ffe5e0',
+    transporte: '#e0f7fa',
+    entretenimiento: '#f3e5f5',
+    estudios: '#e8f5e9',
+    salud: '#fff9c4',
+    otros: '#ececec'
+  }
+  // Clase especial para gastos mayores a S/. 50
+  const esGastoAlto = gasto.cantidad > 50
 
   const obtenerEmoji = (categoria: string) => {
     const emojis = {
-      comida: '🍔',
+      comida: '🍔', 
       transporte: '🚌',
       entretenimiento: '🎮',
       estudios: '📚',
@@ -27,8 +38,11 @@ function GastoItem({ gasto, onEliminar }: GastoItemProps) {
     return emojis[categoria as keyof typeof emojis] || '📌'
   }
 
-  return (
-    <div className="gasto-item">
+   return (
+    <div
+      className={`gasto-item${esGastoAlto ? ' gasto-alto' : ''}`}
+      style={{ backgroundColor: categoriaColors[gasto.categoria] || '#ececec' }}
+    >
       <div className="gasto-info">
         <div className="gasto-header">
           <span className="gasto-emoji">{obtenerEmoji(gasto.categoria)}</span>

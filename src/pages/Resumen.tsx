@@ -55,6 +55,8 @@ function Resumen() {
   }
 
   const gastoMayor = obtenerGastoMayor()
+  // Calcula el promedio de gastos, evitando división por cero
+  const promedioGastos = gastos.length > 0 ? totalGeneral / gastos.length : 0
 
   return (
     <div className="resumen-container">
@@ -69,6 +71,7 @@ function Resumen() {
           <div className="resumen-total">
             <h3>Total General</h3>
             <p className="total-cantidad">S/. {totalGeneral.toFixed(2)}</p>
+            <p className="total-promedio">Gasto promedio: S/. {promedioGastos.toFixed(2)}</p>
             <p className="total-gastos">Total de gastos registrados: {gastos.length}</p>
           </div>
 
