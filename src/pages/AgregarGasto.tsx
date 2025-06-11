@@ -14,7 +14,12 @@ function AgregarGasto() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
+    //validacion descipcion 
+    if (!formData.descripcion || formData.descripcion.trim().length < 3) {
+    alert('La descripción debe tener al menos 3 caracteres.');
+    return;
+    }
     if (formData.descripcion && formData.cantidad) {
       const nuevoGasto: Gasto = {
         id: Date.now().toString(),
@@ -24,6 +29,12 @@ function AgregarGasto() {
         fecha: formData.fecha
       }
       
+      // Validación de cantidad
+    const cantidadNum = parseFloat(formData.cantidad);
+    if (isNaN(cantidadNum) || cantidadNum <= 0) {
+      alert('La cantidad debe ser un número mayor a 0.');
+      return;
+    }
       const gastosGuardados = localStorage.getItem('gastos')
       const gastos = gastosGuardados ? JSON.parse(gastosGuardados) : []
       gastos.push(nuevoGasto)
@@ -31,9 +42,7 @@ function AgregarGasto() {
       
       alert('Gasto agregado exitosamente!')
       navigate('/lista')
-    } else {
-      alert('Por favor completa todos los campos')
-    }
+    } 
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -85,6 +94,7 @@ function AgregarGasto() {
             <option value="transporte">Transporte</option>
             <option value="entretenimiento">Entretenimiento</option>
             <option value="estudios">Estudios</option>
+            <option value="salud">Salud</option>
             <option value="otros">Otros</option>
           </select>
         </div>
