@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/control-gastos/', // Debe coincidir con tu repo
+  base: '/control-gastos/', // Ya está correcto
   plugins: [react()],
 })
