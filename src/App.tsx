@@ -5,6 +5,8 @@ import Inicio from './pages/Inicio'
 import AgregarGasto from './pages/AgregarGasto'
 import ListaGastos from './pages/ListaGastos'
 import Resumen from './pages/Resumen'
+import AgregarIngreso from './pages/AgregarIngreso'
+import ListaIngresos from './pages/ListaIngresos'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
               <li><Link to="/">Inicio</Link></li>
               <li><Link to="/agregar">Agregar Gasto</Link></li>
               <li><Link to="/lista">Ver Gastos</Link></li>
+              <li><Link to="/ingresos">Ingresos</Link></li>
+              <li><Link to="/agregar-ingreso">Agregar Ingreso</Link></li>
               <li><Link to="/resumen">Resumen</Link></li>
             </ul>
           </nav>
@@ -27,6 +31,8 @@ function App() {
             <Route path="/" element={<Inicio />} />
             <Route path="/agregar" element={<AgregarGasto />} />
             <Route path="/lista" element={<ListaGastos />} />
+            <Route path="/agregar-ingreso" element={<AgregarIngreso />} />
+            <Route path="/ingresos" element={<ListaIngresos />} />
             <Route path="/resumen" element={<Resumen />} />
           </Routes>
         </main>

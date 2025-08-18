@@ -7,7 +7,15 @@ interface GastoItemProps {
 
 function GastoItem({ gasto, onEliminar }: GastoItemProps) {
   const formatearFecha = (fecha: string) => {
-    const date = new Date(fecha)
+    // Parse 'YYYY-MM-DD' as local date to avoid UTC shift
+    const parts = fecha.split('-').map(Number)
+    let date: Date
+    if (parts.length === 3 && parts.every(n => !Number.isNaN(n))) {
+      const [y, m, d] = parts
+      date = new Date(y, m - 1, d)
+    } else {
+      date = new Date(fecha)
+    }
     return date.toLocaleDateString('es-PE', {
       day: '2-digit',
       month: '2-digit',

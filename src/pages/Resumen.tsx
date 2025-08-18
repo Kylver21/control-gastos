@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { Gasto } from '../types/Gasto'
+import type { Ingreso } from '../types/Ingreso'
 
 interface ResumenCategoria {
   categoria: string
@@ -11,6 +12,7 @@ function Resumen() {
   const [gastos, setGastos] = useState<Gasto[]>([])
   const [resumenCategorias, setResumenCategorias] = useState<ResumenCategoria[]>([])
   const [totalGeneral, setTotalGeneral] = useState(0)
+  const [totalIngresos, setTotalIngresos] = useState(0)
 
   useEffect(() => {
     const gastosGuardados = localStorage.getItem('gastos')
@@ -18,6 +20,12 @@ function Resumen() {
       const gastosData = JSON.parse(gastosGuardados)
       setGastos(gastosData)
       calcularResumen(gastosData)
+    }
+    const ingresosGuardados = localStorage.getItem('ingresos')
+    if (ingresosGuardados) {
+      const ingresosData: Ingreso[] = JSON.parse(ingresosGuardados)
+      const totalIng = ingresosData.reduce((acc: number, i: Ingreso) => acc + i.cantidad, 0)
+      setTotalIngresos(totalIng)
     }
   }, [])
 
@@ -57,6 +65,7 @@ function Resumen() {
   const gastoMayor = obtenerGastoMayor()
   // Calcula el promedio de gastos, evitando división por cero
   const promedioGastos = gastos.length > 0 ? totalGeneral / gastos.length : 0
+  const balance = totalIngresos - totalGeneral
 
   return (
     <div className="resumen-container">
@@ -73,6 +82,13 @@ function Resumen() {
             <p className="total-cantidad">S/. {totalGeneral.toFixed(2)}</p>
             <p className="total-promedio">Gasto promedio: S/. {promedioGastos.toFixed(2)}</p>
             <p className="total-gastos">Total de gastos registrados: {gastos.length}</p>
+            <hr />
+            <h3>Ingresos</h3>
+            <p className="total-ingresos">S/. {totalIngresos.toFixed(2)}</p>
+            <h3>Balance</h3>
+            <p className={balance >= 0 ? 'balance-positivo' : 'balance-negativo'}>
+              S/. {balance.toFixed(2)}
+            </p>
           </div>
 
           <div className="resumen-categorias">
